@@ -44,25 +44,39 @@ class CartPage extends StatelessWidget {
                     itemCount: value.cartItems.length,
                     padding: EdgeInsets.all(18),
                     itemBuilder: (context, index) {
+                      final item = value.cartItems[index];
+                      final name = item['name'];
+                      final image = item['image'];
+                      final price =
+                          double.tryParse(item['price'] as String) ?? 0;
+                      final qty = item['qty'] as int;
+                      final lineTotal = (price * qty).toStringAsFixed(2);
+
                       return Padding(
                         padding: EdgeInsets.all(8),
                         child: ListTile(
-                          leading: Image.asset(
-                            value.cartItems[index][2],
-                            height: 50,
-                          ),
+                          leading: Image.asset(image, height: 50),
                           title: Text(
-                            value.cartItems[index][0],
+                            "$name x$qty",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           tileColor: Colors.brown[500],
-                          subtitle: Text(value.cartItems[index][1]),
-                          trailing: IconButton(
-                            onPressed: () => Provider.of<CartModel>(
-                              context,
-                              listen: false,
-                            ).removeItemFromCard(index),
-                            icon: Icon(Icons.remove_circle_outline),
+                          subtitle: Text("\$${price.toStringAsFixed(2)}"),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "\$$lineTotal",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              IconButton(
+                                onPressed: () => Provider.of<CartModel>(
+                                  context,
+                                  listen: false,
+                                ).removeItemFromCard(index),
+                                icon: Icon(Icons.remove_circle_outline),
+                              ),
+                            ],
                           ),
                         ),
                       );

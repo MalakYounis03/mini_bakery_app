@@ -78,9 +78,9 @@ class _ShopPageState extends State<ShopPage> {
                     childAspectRatio: 1 / 1.2,
                   ),
                   itemBuilder: (context, index) => GroceryItemTitle(
-                    itemName: value.shopItems[index][0],
-                    itemPrice: value.shopItems[index][1],
-                    imgPath: value.shopItems[index][2],
+                    itemName: value.shopItems[index][1],
+                    itemPrice: value.shopItems[index][2],
+                    imgPath: value.shopItems[index][3],
                     onPressed: () {
                       Provider.of<CartModel>(
                         context,
